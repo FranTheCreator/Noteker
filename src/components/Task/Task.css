@@ -1,0 +1,12 @@
+.main-container__task{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background-color: var(--secondary-color);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    cursor: pointer;
+}

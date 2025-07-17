@@ -1,0 +1,28 @@
+.task-editing__options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--main-color);
+    background-color: var(--contrast-color);
+    cursor: pointer;
+    transition: scale .2s, color .25s, background-color .25s;
+}
+
+.task-editing__options:hover{
+    color: var(--contrast-color);
+    background-color: var(--main-color);
+    scale: 1.07;
+}
+
+.task-editing__options:active{
+    scale: .98;
+}

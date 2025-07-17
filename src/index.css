@@ -1,3 +1,21 @@
 :root{
-    --main-color: rgb(255, 178, 147);
+    --main-color: #8AC6D0;
+    --secondary-color: #63768D;
+    --contrast-color: #36213E;
+    --second-contrast-color: #554971;
+    --highlight-color: #B8F3FF;
+    --delete-task-color: #ff5151;
+    --completed-task-color: #2cf554;
+    --font-color: #2b2b2b;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+body{
+    background-color: var(--main-color);
 }

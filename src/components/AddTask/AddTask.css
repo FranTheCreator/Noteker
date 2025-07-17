@@ -1,0 +1,40 @@
+.main-container__add-task{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    background-color: var(--secondary-color);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: opacity .2s, scale .2s;
+}
+
+.main-container__add-task:hover{
+    opacity: 0.8;
+    scale: .98;
+}
+
+.main-container__add-task:hover > .main-container__add-task-dot{
+    opacity: 1;
+    scale: 1.08;
+}
+
+.main-container__add-task-dot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    color: var(--main-color);
+    background-color: var(--second-contrast-color);
+    opacity: .6;
+    border-radius: 50%;
+    transition: opacity .2s, scale .2s;
+}
+
+.main-container__add-task-plus-sign{
+    color: var(--main-color);
+}   

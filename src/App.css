@@ -1,0 +1,11 @@
+.main-container{
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: clamp(450px, 65%, 1200px);
+    min-height: 100dvh;
+    margin: auto;
+    gap: 10px;
+}
