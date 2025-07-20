@@ -14,7 +14,7 @@
     color: var(--main-color);
     background-color: var(--contrast-color);
     cursor: pointer;
-    transition: scale .2s, color .25s, background-color .25s;
+    transition: scale .2s, color .3s, background-color .3s;
 }
 
 .task-editing__options:hover{

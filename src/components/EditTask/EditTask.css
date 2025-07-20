@@ -6,6 +6,8 @@
     padding-bottom: 0;
     background-color: var(--secondary-color);
     overflow: hidden;
+    z-index: 1000;
+    animation: fade .14s 1 forwards running;
 }
 
 .task-editing__return{
@@ -38,6 +40,8 @@
     height: fit-content;
     margin: 20px 0 15px;
     padding-bottom: 5px;
+    border: none;
+    outline: none;
     font-size: 2em;
     border-bottom: 2px solid var(--font-color);
 }
@@ -50,8 +54,25 @@
     overflow-y: auto;
 }
 
-.task-editing__paragraph{
+.task-editing__text{
+    font-size: 1.1em;
+    min-height: 100%;
+    padding: 4px;
+    border: none;
+    outline: none;
     color: var(--font-color);
-    text-indent: 0;
+    /* text-indent: 5px; */
     margin-right: 10px;
+}
+
+
+
+@keyframes fade {
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
 }

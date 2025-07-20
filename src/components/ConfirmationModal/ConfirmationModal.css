@@ -1,0 +1,68 @@
+.confirmation-modal{
+    z-index: 1010;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    height: 100%;
+    background-color: #0000;
+    backdrop-filter: blur(10px);
+    color: var(--font-color);
+    font-weight: 600;
+}
+
+.confirmation-modal__body{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    /* width: clamp(450px, 40%, 1250px); */
+    width: max-content;
+    padding: 10px;
+    border: 4px solid var(--second-contrast-color);
+    border-radius: 20px;
+    background-color: var(--secondary-color);
+}
+
+.confirmation-modal__options{
+    display: flex;
+    flex-flow: row;
+    margin-top: 13px;
+}
+
+.confirmation-modal__options > li{
+    list-style: none;
+}
+
+.confirmation-modal__options > li:not(:has(+ li)){
+    margin-left: 25px;
+}
+
+.confirmation-modal__button{
+    padding: 4px 4px;
+    border: none;
+    border: 2px solid var(--second-contrast-color);
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: scale .27s, box-shadow .25s;
+}
+
+.confirmation-modal__button:hover{
+    scale: 1.05;
+}
+
+.button--cancel{
+    background-color: var(--completed-task-color);
+}
+
+.button--cancel:hover{
+    box-shadow: 0 0 5px 1px var(--completed-task-color);
+}
+
+.button--delete{
+    background-color: var(--delete-task-color);
+}
+
+.button--delete:hover{
+    box-shadow: 0 0 5px 1px var(--delete-task-color);
+}

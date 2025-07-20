@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
-export const AddTask = ({ onclick }) => {
+export const AddTask = ({ openEditor }) => {
     return (
         <div 
             className="main-container__add-task" 
             title="Agregar tarea nueva"
-            onClick={ onclick }
+            onClick={ openEditor }
             >
             <span className="main-container__add-task-dot">
                 <FontAwesomeIcon icon={ faPlus } />

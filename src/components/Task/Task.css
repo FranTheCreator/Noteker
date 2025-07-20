@@ -9,4 +9,18 @@
     backdrop-filter: blur(10px);
     border-radius: 25px;
     cursor: pointer;
+    transition: background-color .28s, scale .2s;
+    z-index: 10;
+}
+
+.main-container__task:hover{
+    scale: 1.02;
+}
+
+.main-container__task:active{
+    scale: .98;
+}
+
+.task--completed{
+    background-color: var(--completed-task-color);
 }
