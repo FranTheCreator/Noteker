@@ -4,6 +4,8 @@ import { CompleteTask } from "./CompleteTask/CompleteTask.jsx"
 import { memo, useState } from "react"
 
 export const Task =  memo( ({ taskTitle, openTask, removalConfirmation, id, removerId }) => {
+
+    
     const [ completed, setCompleted ] = useState(false);
 
     const handleTaskCompletion = (event) => {
@@ -12,20 +14,29 @@ export const Task =  memo( ({ taskTitle, openTask, removalConfirmation, id, remo
     }
     
     const handleRemovalConfirmation = (event) => {
+        removerId.current = id;
         event.stopPropagation();
+        console.log("task id: " + id)
+        console.log("remover obj (useRef): " + removerId.current)
         removalConfirmation();
     }
-
-    removerId.current = id;
     
 
+    taskTitle = taskTitle.trim();
+
+    if (taskTitle.includes(" ")){
+        taskTitle = taskTitle.split(" ");
+        taskTitle = `${taskTitle[0]} ${taskTitle[1]}`
+    }
+
+
     return (
-        <div className={`main-container__task ${completed ? "task--completed" : ""}`}
+        <div className={`task ${completed ? "task--completed" : ""}`}
             title={ completed ? "Tarea completada" : "" }
             onClick={ openTask }
         >
             <RemoveTask confirmRemoval={ handleRemovalConfirmation } />
-            <h2>{ taskTitle }</h2>
+            <h2 className="task__title">{ taskTitle }</h2>
             <CompleteTask taskState={ completed } setTaskState={ handleTaskCompletion }/>
         </div>
     )

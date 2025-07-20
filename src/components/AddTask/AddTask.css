@@ -1,40 +1,52 @@
-.main-container__add-task{
+.add-task{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
-    background-color: var(--secondary-color);
-    backdrop-filter: blur(10px);
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--second-contrast-color);
     border-radius: 25px;
     cursor: pointer;
     transition: opacity .2s, scale .2s;
+    z-index: 900;
 }
 
-.main-container__add-task:hover{
+.add-task:hover{
     opacity: 0.8;
-    scale: .98;
+    scale: 1.08;
 }
 
-.main-container__add-task:hover > .main-container__add-task-dot{
+.add-task:hover > .add-task-dot{
     opacity: 1;
     scale: 1.08;
 }
 
-.main-container__add-task-dot{
+.add-task:active{
+    opacity: 1;
+    scale: .92;
+}
+
+.add-task:active > .add-task-dot{
+    scale: .92;
+}
+
+.add-task-dot{
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     color: var(--main-color);
-    background-color: var(--second-contrast-color);
-    opacity: .6;
+    /* background-color: var(--second-contrast-color); */
+    /* opacity: .6; */
     border-radius: 50%;
     transition: opacity .2s, scale .2s;
 }
 
-.main-container__add-task-plus-sign{
+.add-task-plus-sign{
     color: var(--main-color);
 }   

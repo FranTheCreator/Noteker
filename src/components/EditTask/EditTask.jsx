@@ -6,7 +6,7 @@ import * as NotesIDB from "../../IDB/IDB.js"
 import "./EditTask.css"
 
 
-export const EditTask = ({ closeEditTask, initTitle, initText }) => {
+export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefined }) => {
     if ( initTitle === "" || initTitle === null || initTitle === undefined ) initTitle = "TITULO";
     if ( initText === "" || initText === null || initText === undefined ) initText  = "...";
 
@@ -15,17 +15,45 @@ export const EditTask = ({ closeEditTask, initTitle, initText }) => {
     const userTextContent = useRef();
     // console.log("render");
 
-    const saveChanges = () => {
-        NotesIDB.addDataToIDB({
-            title: userTitleContent.current.textContent,
-            text: userTextContent.current.textContent
-        });
+    // function getTextWithNewlinesFromContenteditable(div) {
+    //     return div.innerHTML
+    //         .replace(/<br\s*\/?>/gi, "\n")
+    //         .replace(/<\/div>\s*<div>/gi, "\n")
+    //         .replace(/<\/?[^>]+(>|$)/g, "")
+    //         // .trim()
+    // }
+
+    const saveChanges = (key) => {
+        // console.log(userTextContent.current.value.length > 100000)
+        if(userTextContent.current.value.length > 100000 || userTitleContent.current.value.length > 100000) return;
+        else {
+            if (key) {
+                // console.log(userTextContent.current.value.length)
+                NotesIDB.modifyIDBData(key, {
+                    title: userTitleContent.current.value,
+                    text: userTextContent.current.value
+                })
+            }
+            else { 
+                // console.log(userTextContent.current.value.length)
+                NotesIDB.addDataToIDB({
+                    title: userTitleContent.current.value,
+                    text: userTextContent.current.value
+                });
+            }
+        }
     }
 
     const handleClick = () => {
-        saveChanges()
-        closeEditTask()
+        saveChanges(taskId);
+        closeEditTask();
     }
+
+    const handleResize = (event) => {
+        event.target.style.height = "auto";
+        event.target.style.height =  event.target.scrollHeight + "px";
+    }
+
 
     return (
         <section className="task-editing">
@@ -33,13 +61,9 @@ export const EditTask = ({ closeEditTask, initTitle, initText }) => {
                 <FontAwesomeIcon icon={ faAngleLeft } /> Volver
             </button>
             
-            <h1 className="task-editing__title" contentEditable ref={ userTitleContent } >
-                { initTitle }
-            </h1>
-            <div className="task-editing__content">
-                <div className="task-editing__text" contentEditable ref={ userTextContent } >
-                    { initText }
-                </div>
+            <textarea className="task-editing__title" onInput={ handleResize } defaultValue={ initTitle } ref={ userTitleContent } maxLength={ 100 } ></textarea>
+            <div className="task-editing__content" >
+                <textarea className="task-editing__text" onInput={ handleResize } defaultValue={ initText } ref={ userTextContent } maxLength={ 100000 } ></textarea>
             </div>
 
             <Options />

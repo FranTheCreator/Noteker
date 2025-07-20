@@ -11,12 +11,18 @@ function App() {
     const [ notesContent, setNotesContent ] = useState([]);
     const [ preloading, setPreloadingState ] = useState(true);
     const [ editing, setEditing ] = useState(false);
-    const [ currentNote, setCurrentNote ] = useState(undefined);
     const [ removalConfirmation, setRemovalConfirmation ] = useState(false);
+    const currentNote = useRef(undefined);
     const selectedNoteKey = useRef(undefined);
 
+
+    const closeEditTask = () => {
+        currentNote.current = undefined;
+        setEditing(false);
+    }
+
     const selectNote = (index) => {
-        setCurrentNote(index);
+        currentNote.current = index;
         setEditing(true);
     }
 
@@ -25,7 +31,6 @@ function App() {
         setRemovalConfirmation(!removalConfirmation);
     }
 
-    // console.log(currentNote)
 
     useEffect(() => {
         NotesIDB.readIDBData()
@@ -37,12 +42,11 @@ function App() {
             console.error("Error al leer la IDB:", err);
             setTimeout( () => preload(), 500);
         })
-        .finally(() => {
-            setPreloadingState(false);
-        });
+        // .finally(() => {
+        //     // setPreloadingState(false);
+        // });
     }, [editing, removalConfirmation])
 
-    // console.log(notesContent)
 
     return (
         <>
@@ -66,32 +70,36 @@ function App() {
                 </div>
             </div>
 
+            {
+                removalConfirmation &&
+                <ConfirmationModal closeModal={ () => setRemovalConfirmation(!removalConfirmation) } confirm={ () => handleTaskRemoval(selectedNoteKey.current) } />
+            }
+
             <div className="main-container">
                 <AddTask openEditor={ () => setEditing(true) }/>
                 { 
                     editing && 
                     <EditTask 
-                        closeEditTask={ () => setEditing(false) } 
-                        initTitle={ currentNote >= 0 ? notesContent[currentNote].title : "" } 
-                        initText={ currentNote >= 0 ? notesContent[currentNote].text : "" } 
+                        closeEditTask={ closeEditTask } 
+                        initTitle={ currentNote.current >= 0 ? notesContent[currentNote.current]?.title : "" } 
+                        initText={ currentNote.current >= 0 ? notesContent[currentNote.current]?.text : "" } 
+                        taskId={ currentNote.current >= 0 ? notesContent[currentNote.current]?.key : undefined }
                     /> 
                 }
-                {
-                    removalConfirmation &&
-                    <ConfirmationModal closeModal={ () => setRemovalConfirmation(!removalConfirmation) } confirm={ () => handleTaskRemoval(selectedNoteKey.current) } />
-                }
-                {
-                    notesContent.map( (contentObject, index) => (
-                        <Task   taskTitle={ contentObject.title } 
-                                openTask={ () => selectNote(index) }
-                                removalConfirmation={ () => setRemovalConfirmation(!removalConfirmation) } 
-                                id={ contentObject.key }
-                                removerId={ selectedNoteKey }
-                                key={ contentObject.key }
-                        />
-                    ))
-                }
-                {/* <Task taskTitle="Test 1"/> */}
+                
+                <div className="tasks-container">
+                    {
+                        notesContent.map( (contentObject, index) => (
+                            <Task   taskTitle={ contentObject.title } 
+                                    openTask={ () => selectNote(index) }
+                                    removalConfirmation={ () => setRemovalConfirmation(!removalConfirmation) } 
+                                    id={ contentObject.key }
+                                    removerId={ selectedNoteKey }
+                                    key={ contentObject.key }
+                            />
+                        ))
+                    }
+                </div>
             </div>
         </>
     )

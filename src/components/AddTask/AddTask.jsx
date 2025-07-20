@@ -6,11 +6,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 export const AddTask = ({ openEditor }) => {
     return (
         <div 
-            className="main-container__add-task" 
+            className="add-task" 
             title="Agregar tarea nueva"
             onClick={ openEditor }
             >
-            <span className="main-container__add-task-dot">
+            <span className="add-task-dot">
                 <FontAwesomeIcon icon={ faPlus } />
             </span>
         </div>
