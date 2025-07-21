@@ -7,38 +7,37 @@ import "./EditTask.css"
 
 
 export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefined }) => {
-    if ( initTitle === "" || initTitle === null || initTitle === undefined ) initTitle = "TITULO";
-    if ( initText === "" || initText === null || initText === undefined ) initText  = "...";
+    if ( initTitle === null || initTitle === undefined ) initTitle = "";
+    if ( initText === null || initText === undefined ) initText  = "";
 
 
     const userTitleContent = useRef();
     const userTextContent = useRef();
-    // console.log("render");
 
-    // function getTextWithNewlinesFromContenteditable(div) {
-    //     return div.innerHTML
-    //         .replace(/<br\s*\/?>/gi, "\n")
-    //         .replace(/<\/div>\s*<div>/gi, "\n")
-    //         .replace(/<\/?[^>]+(>|$)/g, "")
-    //         // .trim()
-    // }
 
     const saveChanges = (key) => {
-        // console.log(userTextContent.current.value.length > 100000)
-        if(userTextContent.current.value.length > 100000 || userTitleContent.current.value.length > 100000) return;
-        else {
+        const titleToSave = userTitleContent.current.value;
+        const textToSave = userTextContent.current.value;
+
+        const titleToSaveLength = titleToSave.length;
+        const textToSaveLength = textToSave.length;
+        const isTitleToSaveEmpty = titleToSave.trim() === "";
+        const isTextToSaveEmpty = textToSave.trim() === "";
+
+
+        if ( isTitleToSaveEmpty && isTextToSaveEmpty ) return;
+        
+        if( titleToSaveLength <= 100 && textToSaveLength <= 100000 ) { 
             if (key) {
-                // console.log(userTextContent.current.value.length)
                 NotesIDB.modifyIDBData(key, {
-                    title: userTitleContent.current.value,
-                    text: userTextContent.current.value
-                })
+                    title: titleToSave,
+                    text: textToSave
+                });
             }
             else { 
-                // console.log(userTextContent.current.value.length)
                 NotesIDB.addDataToIDB({
-                    title: userTitleContent.current.value,
-                    text: userTextContent.current.value
+                    title: titleToSave,
+                    text: textToSave
                 });
             }
         }
@@ -61,9 +60,23 @@ export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefine
                 <FontAwesomeIcon icon={ faAngleLeft } /> Volver
             </button>
             
-            <textarea className="task-editing__title" onInput={ handleResize } defaultValue={ initTitle } ref={ userTitleContent } maxLength={ 100 } ></textarea>
+            <textarea 
+                className="task-editing__title"
+                onInput={ handleResize } 
+                defaultValue={ initTitle } 
+                ref={ userTitleContent } 
+                maxLength={ 100 } 
+                placeholder="TITULO"
+            ></textarea>
             <div className="task-editing__content" >
-                <textarea className="task-editing__text" onInput={ handleResize } defaultValue={ initText } ref={ userTextContent } maxLength={ 100000 } ></textarea>
+                <textarea 
+                    className="task-editing__text" 
+                    onInput={ handleResize } 
+                    defaultValue={ initText } 
+                    ref={ userTextContent } 
+                    maxLength={ 100000 } 
+                    placeholder="Escribe aquí..."
+                ></textarea>
             </div>
 
             <Options />

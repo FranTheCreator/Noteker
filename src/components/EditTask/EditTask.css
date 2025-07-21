@@ -57,8 +57,13 @@
     resize: none;
 }
 
+.task-editing__title::placeholder{
+    opacity: .68;
+    color: var(--font-color);
+}
+
 .task-editing__content{
-    height: calc(100% - 2lh - 2em - 45px);
+    height: calc(100% - 1lh - 2em - 45px);
     scrollbar-width: thin;
     scrollbar-color: var(--second-contrast-color) transparent;
     scrollbar-gutter: stable;
@@ -77,6 +82,11 @@
     font-size: 1.1em;
     white-space: pre-wrap;
     resize: none;
+}
+
+.task-editing__text::placeholder{
+    opacity: .68;
+    color: var(--font-color);
 }
 
 

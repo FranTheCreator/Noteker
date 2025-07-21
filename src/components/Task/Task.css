@@ -12,6 +12,7 @@
     backdrop-filter: blur(10px);
     border-radius: 25px;
     cursor: pointer;
+    user-select: none;
     transition: background-color .28s, scale .2s;
     z-index: 10;
 }

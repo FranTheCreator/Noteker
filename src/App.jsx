@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react"
-import { AddTask } from "./components"
-import { Task } from "./components"
-import { EditTask } from "./components"
-import { ConfirmationModal } from "./components"
-import * as NotesIDB from "./IDB/IDB.js"
 import './App.css'
+import { useEffect, useRef, useState } from "react"
+import * as NotesIDB from "./IDB/IDB.js"
+import { PreloadScreen, AddTask, Task, EditTask, ConfirmationModal } from "./components"
 
 
 function App() {
     const [ notesContent, setNotesContent ] = useState([]);
-    const [ preloading, setPreloadingState ] = useState(true);
+    const [ preloading, setPreloading ] = useState(true);
     const [ editing, setEditing ] = useState(false);
-    const [ removalConfirmation, setRemovalConfirmation ] = useState(false);
+    const [ showRemovalModal, setShowRemovalModal ] = useState(false);
     const currentNote = useRef(undefined);
     const selectedNoteKey = useRef(undefined);
 
@@ -28,51 +25,31 @@ function App() {
 
     const handleTaskRemoval = (key) => {
         NotesIDB.deleteIDBData(key);
-        setRemovalConfirmation(!removalConfirmation);
+        setShowRemovalModal(false);
     }
 
-
-    useEffect(() => {
+    const preload = () => {
         NotesIDB.readIDBData()
         .then(notes => {
             setNotesContent(notes);
-            setPreloadingState(false);
+            setPreloading(false);
         })
-        .catch(err => {
-            console.error("Error al leer la IDB:", err);
-            setTimeout( () => preload(), 500);
-        })
-        // .finally(() => {
-        //     // setPreloadingState(false);
-        // });
-    }, [editing, removalConfirmation])
+        .catch( error => setTimeout(preload, 500) )
+    }
+
+
+    useEffect(() => preload, [editing, showRemovalModal]);
 
 
     return (
         <>
-            <div className={ `preload-screen ${ preloading ? "" : "preload-screen--loaded" }` }>
-                <div className="preload">
-                    <div className="preload__rotate rotate--r1">
-                        <div className="dot"></div>
-                    </div>
-                    <div className="preload__rotate rotate--r2">
-                        <div className="dot"></div>
-                    </div>
-                    <div className="preload__rotate rotate--r3">
-                        <div className="dot"></div>
-                    </div>
-                    <div className="preload__rotate rotate--r4">
-                        <div className="dot"></div>
-                    </div>
-                    <div className="preload__rotate rotate--r5">
-                        <div className="dot"></div>
-                    </div>
-                </div>
-            </div>
+            {
+                preloading && <PreloadScreen />
+            }
 
             {
-                removalConfirmation &&
-                <ConfirmationModal closeModal={ () => setRemovalConfirmation(!removalConfirmation) } confirm={ () => handleTaskRemoval(selectedNoteKey.current) } />
+                showRemovalModal &&
+                <ConfirmationModal closeModal={ () => setShowRemovalModal(false) } confirm={ () => handleTaskRemoval(selectedNoteKey.current) } />
             }
 
             <div className="main-container">
@@ -88,17 +65,20 @@ function App() {
                 }
                 
                 <div className="tasks-container">
-                    {
-                        notesContent.map( (contentObject, index) => (
-                            <Task   taskTitle={ contentObject.title } 
-                                    openTask={ () => selectNote(index) }
-                                    removalConfirmation={ () => setRemovalConfirmation(!removalConfirmation) } 
-                                    id={ contentObject.key }
-                                    removerId={ selectedNoteKey }
-                                    key={ contentObject.key }
-                            />
-                        ))
-                    }
+                    <div className="task-wrapper">
+                        {
+                            notesContent.map( (contentObject, index) => (
+                                <Task   taskTitle={ contentObject.title } 
+                                        taskText={ contentObject.text }
+                                        openTask={ () => selectNote(index) }
+                                        removalConfirmation={ () => setShowRemovalModal(true) } 
+                                        id={ contentObject.key }
+                                        removerId={ selectedNoteKey }
+                                        key={ contentObject.key }
+                                />
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
         </>
