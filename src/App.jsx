@@ -9,17 +9,24 @@ function App() {
     const [ preloading, setPreloading ] = useState(true);
     const [ editing, setEditing ] = useState(false);
     const [ showRemovalModal, setShowRemovalModal ] = useState(false);
-    const currentNote = useRef(undefined);
-    const selectedNoteKey = useRef(undefined);
 
+    const currentTask = useRef(undefined);
+    const taskToRemove = useRef(undefined);
+
+    const isNewTask = currentTask.current >= 0;
+    const isNewTitle = isNewTask ? notesContent[currentTask.current]?.title : "";
+    const isNewText = isNewTask ? notesContent[currentTask.current]?.text : "";
+    const isNewKey = isNewTask ? notesContent[currentTask.current]?.key : undefined;
+
+    const completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
 
     const closeEditTask = () => {
-        currentNote.current = undefined;
+        currentTask.current = undefined;
         setEditing(false);
     }
 
     const selectNote = (index) => {
-        currentNote.current = index;
+        currentTask.current = index;
         setEditing(true);
     }
 
@@ -38,6 +45,8 @@ function App() {
     }
 
 
+    if (!completedTasks) localStorage.setItem("completedTasks", JSON.stringify({}));
+
     useEffect(() => preload, [editing, showRemovalModal]);
 
 
@@ -49,7 +58,7 @@ function App() {
 
             {
                 showRemovalModal &&
-                <ConfirmationModal closeModal={ () => setShowRemovalModal(false) } confirm={ () => handleTaskRemoval(selectedNoteKey.current) } />
+                <ConfirmationModal closeModal={ () => setShowRemovalModal(false) } confirm={ () => handleTaskRemoval(taskToRemove.current) } />
             }
 
             <div className="main-container">
@@ -58,9 +67,9 @@ function App() {
                     editing && 
                     <EditTask 
                         closeEditTask={ closeEditTask } 
-                        initTitle={ currentNote.current >= 0 ? notesContent[currentNote.current]?.title : "" } 
-                        initText={ currentNote.current >= 0 ? notesContent[currentNote.current]?.text : "" } 
-                        taskId={ currentNote.current >= 0 ? notesContent[currentNote.current]?.key : undefined }
+                        initTitle={ isNewTitle } 
+                        initText={ isNewText } 
+                        taskId={ isNewKey }
                     /> 
                 }
                 
@@ -71,9 +80,10 @@ function App() {
                                 <Task   taskTitle={ contentObject.title } 
                                         taskText={ contentObject.text }
                                         openTask={ () => selectNote(index) }
-                                        removalConfirmation={ () => setShowRemovalModal(true) } 
+                                        showRemovalModal={ () => setShowRemovalModal(true) } 
+                                        initCompletionState={ completedTasks && completedTasks[contentObject.key] }
                                         id={ contentObject.key }
-                                        removerId={ selectedNoteKey }
+                                        taskToRemove={ taskToRemove }
                                         key={ contentObject.key }
                                 />
                             ))
