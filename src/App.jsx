@@ -13,10 +13,10 @@ function App() {
     const currentTask = useRef(undefined);
     const taskToRemove = useRef(undefined);
 
-    const isNewTask = currentTask.current >= 0;
-    const isNewTitle = isNewTask ? notesContent[currentTask.current]?.title : "";
-    const isNewText = isNewTask ? notesContent[currentTask.current]?.text : "";
-    const isNewKey = isNewTask ? notesContent[currentTask.current]?.key : undefined;
+    const isTaskSelected = currentTask.current >= 0;
+    const isNewTitle = isTaskSelected ? notesContent[currentTask.current]?.title : "";
+    const isNewText = isTaskSelected ? notesContent[currentTask.current]?.text : "";
+    const isNewKey = isTaskSelected ? notesContent[currentTask.current]?.key : undefined;
 
     const completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
 
@@ -41,7 +41,7 @@ function App() {
             setNotesContent(notes);
             setPreloading(false);
         })
-        .catch( error => setTimeout(preload, 500) )
+        .catch( () => setTimeout(preload, 500) )
     }
 
 
@@ -69,6 +69,7 @@ function App() {
                         closeEditTask={ closeEditTask } 
                         initTitle={ isNewTitle } 
                         initText={ isNewText } 
+                        initMode={ isTaskSelected }
                         taskId={ isNewKey }
                     /> 
                 }

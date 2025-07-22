@@ -1,16 +1,13 @@
+import "./EditTask.css"
+import { useRef, useState } from "react"
+import * as NotesIDB from "../../IDB/IDB.js"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons"
-import { useRef } from "react"
 import { Options } from "./Options/Options.jsx"
-import * as NotesIDB from "../../IDB/IDB.js"
-import "./EditTask.css"
 
 
-export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefined }) => {
-    if ( initTitle === null || initTitle === undefined ) initTitle = "";
-    if ( initText === null || initText === undefined ) initText  = "";
-
-
+export const EditTask = ({ closeEditTask, initTitle, initText, initMode, taskId = undefined }) => {
+    const [ viewMode, setViewMode ] = useState(initMode);
     const userTitleContent = useRef();
     const userTextContent = useRef();
 
@@ -26,20 +23,20 @@ export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefine
 
 
         if ( isTitleToSaveEmpty && isTextToSaveEmpty ) return;
+        if ( titleToSaveLength > 100 && textToSaveLength > 100000 ) return;
         
-        if( titleToSaveLength <= 100 && textToSaveLength <= 100000 ) { 
-            if (key) {
-                NotesIDB.modifyIDBData(key, {
-                    title: titleToSave,
-                    text: textToSave
-                });
-            }
-            else { 
-                NotesIDB.addDataToIDB({
-                    title: titleToSave,
-                    text: textToSave
-                });
-            }
+         
+        if (key) {
+            NotesIDB.modifyIDBData(key, {
+                title: titleToSave,
+                text: textToSave
+            });
+        }
+        else { 
+            NotesIDB.addDataToIDB({
+                title: titleToSave,
+                text: textToSave
+            });
         }
     }
 
@@ -48,10 +45,10 @@ export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefine
         closeEditTask();
     }
 
-    const handleResize = (event) => {
-        event.target.style.height = "auto";
-        event.target.style.height =  event.target.scrollHeight + "px";
-    }
+    // const handleResize = (event) => {
+    //     event.target.style.height = "auto";
+    //     event.target.style.height =  event.target.scrollHeight + "px";
+    // }
 
 
     return (
@@ -62,24 +59,22 @@ export const EditTask = ({ closeEditTask, initTitle, initText, taskId = undefine
             
             <textarea 
                 className="task-editing__title"
-                onInput={ handleResize } 
+                disabled={ viewMode }
                 defaultValue={ initTitle } 
                 ref={ userTitleContent } 
                 maxLength={ 100 } 
                 placeholder="TITULO"
             ></textarea>
-            <div className="task-editing__content" >
-                <textarea 
-                    className="task-editing__text" 
-                    onInput={ handleResize } 
-                    defaultValue={ initText } 
-                    ref={ userTextContent } 
-                    maxLength={ 100000 } 
-                    placeholder="Escribe aquí..."
-                ></textarea>
-            </div>
+            <textarea 
+                className="task-editing__text" 
+                disabled={ viewMode }
+                defaultValue={ initText } 
+                ref={ userTextContent } 
+                maxLength={ 100000 } 
+                placeholder="Escribe aquí..."
+            ></textarea>
 
-            <Options />
+            <Options viewMode={ viewMode } setViewMode={ () => setViewMode(!viewMode) } />
         </section>
     )
 }

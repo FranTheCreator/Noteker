@@ -3,10 +3,12 @@
     --secondary-color: #63768D;
     --contrast-color: #36213E;
     --second-contrast-color: #554971;
+    --second-contrast-color-op-bb: #554971bb;
     --highlight-color: #B8F3FF;
     --delete-task-color: #ff5151;
     --completed-task-color: #2a6;
     --font-color: #2b2b2b;
+    --mobile-ux: 450px;
 }
 
 *{

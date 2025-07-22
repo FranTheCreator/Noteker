@@ -36,7 +36,7 @@ export const Task =  memo( ({ taskTitle, taskText, openTask, showRemovalModal, i
 
 
     return (
-        <div className={`task${ isTaskCompleted }`}
+        <div className={ `task${ isTaskCompleted }` }
             title={ completed ? "Tarea completada" : undefined }
             onClick={ openTask }
         >

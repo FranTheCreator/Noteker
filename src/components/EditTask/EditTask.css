@@ -14,6 +14,7 @@
     animation: fade .14s 1 forwards running;
 }
 
+
 .task-editing__return{
     position: absolute;
     top: 10px;
@@ -35,19 +36,17 @@
     scale: .98;
 }
 
-.task-editing__workspace{
-    width: 100%;
-}
 
 .task-editing__title{
     width: 100%;
     min-height: calc(1lh + 7px);
     max-height: calc(1lh + 7px);
-    margin: 20px 0 15px;
+    margin: 35px 0 15px;
     padding-bottom: 5px;
     border: none;
     border-bottom: 2px solid var(--font-color);
     outline: none;
+    color: var(--font-color);
     background-color: transparent;
     font-size: 2em;
     overflow-y: auto;
@@ -62,25 +61,21 @@
     color: var(--font-color);
 }
 
-.task-editing__content{
-    height: calc(100% - 1lh - 2em - 45px);
-    scrollbar-width: thin;
-    scrollbar-color: var(--second-contrast-color) transparent;
-    scrollbar-gutter: stable;
-    overflow-y: auto;
-}
 
 .task-editing__text{
-    width: calc(100% - 10px);
-    min-height: calc(100% - 4px);
-    margin-right: 10px;
+    width: 100%;
+    height: calc(100% - 1lh - 2em - 44px);
     padding: 4px;
+    padding-right: 5px;
     border: none;
     outline: none;
     color: var(--font-color);
     background-color: var(--secondary-color);
     font-size: 1.1em;
     white-space: pre-wrap;
+    scrollbar-width: thin;
+    scrollbar-color: var(--second-contrast-color) transparent;
+    scrollbar-gutter: stable;
     resize: none;
 }
 
@@ -88,6 +83,8 @@
     opacity: .68;
     color: var(--font-color);
 }
+
+
 
 
 

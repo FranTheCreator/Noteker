@@ -1,6 +1,6 @@
 .main-container{
     position: relative;
-    width: clamp(350px, 65%, 1200px);
+    width: clamp(400px, 65%, 1200px);
     min-height: 100dvh;
     margin: auto;
 }
@@ -24,4 +24,14 @@
     height: fit-content;
     min-height: calc(100dvh - 40px);
     gap: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .main-container{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+   
 }

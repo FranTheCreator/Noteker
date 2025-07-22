@@ -1,28 +1,78 @@
 .task-editing__options{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-flow: row-reverse;
     position: absolute;
     top: 10px;
     right: 20px;
+    width: 46px;
+    min-width: 46px;
+    height: fit-content;
+    padding: 6px 8px;
+    border-radius: 10px;
+    background-color: var(--second-contrast-color-op-bb);
+    transition: width .18s;
+    overflow: hidden;
+}
+
+.options--deployed{
+    width: 126px;
+    transition: width .25s;
+}
+
+.task-editing__deploy{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 30px;
     width: 30px;
     height: 30px;
     border: none;
-    border-radius: 50%;
+    border-radius: 10px;
+    color: var(--main-color);
+    background-color: var(--contrast-color);
     font-size: 1.2em;
-    font-weight: bold;
+    cursor: pointer;
+    transition: scale .2s, color .3s, background-color .3s;
+}
+
+.task-editing__deploy:hover{
+    color: var(--contrast-color);
+    background-color: var(--main-color);
+}
+
+.task-editing__deploy:active{
+    scale: .96;
+}
+
+.task-editing__menu{
+    display: flex;
+    list-style: none;
+}
+
+.task-editing__menu > li{
+    margin-right: 10px;
+}
+
+.task-editing__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
     color: var(--main-color);
     background-color: var(--contrast-color);
     cursor: pointer;
     transition: scale .2s, color .3s, background-color .3s;
 }
 
-.task-editing__options:hover{
+.task-editing__button:hover{
     color: var(--contrast-color);
     background-color: var(--main-color);
-    scale: 1.07;
 }
 
-.task-editing__options:active{
-    scale: .98;
+.task-editing__button:active{
+    scale: .96;
 }

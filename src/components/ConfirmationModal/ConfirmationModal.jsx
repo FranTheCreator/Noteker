@@ -2,10 +2,10 @@ import "./ConfirmationModal.css"
 
 export const ConfirmationModal = ({ closeModal, confirm }) => {
     return (
-        <dialog className="confirmation-modal" open>
-            <form method="dialog" className="confirmation-modal__body">
+        <dialog className="confirmation-modal">
+            <div className="confirmation-modal__body">
                 <p>¿Seguro que quieres eliminar esta tarea?</p>
-                <menu className="confirmation-modal__options">
+                <ul className="confirmation-modal__options">
                     <li>
                         <button className="confirmation-modal__button button--cancel" 
                                 onClick={ closeModal }>
@@ -17,8 +17,8 @@ export const ConfirmationModal = ({ closeModal, confirm }) => {
                             Eliminar
                         </button>
                     </li>
-                </menu>
-            </form>
+                </ul>
+            </div>
         </dialog>
     )
 }
