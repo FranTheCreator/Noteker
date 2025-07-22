@@ -61,8 +61,8 @@ function App() {
                 <ConfirmationModal closeModal={ () => setShowRemovalModal(false) } confirm={ () => handleTaskRemoval(taskToRemove.current) } />
             }
 
-            <div className="main-container">
-                <AddTask openEditor={ () => setEditing(true) }/>
+            <main className="main-container" tabIndex={ -1 }>
+                <AddTask openEditor={ () => setEditing(true) } disableTabIndex={ editing }/>
                 { 
                     editing && 
                     <EditTask 
@@ -74,7 +74,7 @@ function App() {
                     /> 
                 }
                 
-                <div className="tasks-container">
+                <section className="tasks-container" tabIndex={ -1 }>
                     <div className="task-wrapper">
                         {
                             notesContent.map( (contentObject, index) => (
@@ -83,6 +83,7 @@ function App() {
                                         openTask={ () => selectNote(index) }
                                         showRemovalModal={ () => setShowRemovalModal(true) } 
                                         initCompletionState={ completedTasks && completedTasks[contentObject.key] }
+                                        disableTabIndex={ editing }
                                         id={ contentObject.key }
                                         taskToRemove={ taskToRemove }
                                         key={ contentObject.key }
@@ -90,8 +91,8 @@ function App() {
                             ))
                         }
                     </div>
-                </div>
-            </div>
+                </section>
+            </main>
         </>
     )
 }

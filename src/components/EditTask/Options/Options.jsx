@@ -7,7 +7,8 @@ export const Options = ({ viewMode, setViewMode }) => {
     const [ showOptions, setShowOptions ] = useState(false);
 
     const viewModeTitle = viewMode ? "Editar tarea" : "Solo lectura"
-    const isMenuClosed = showOptions ? "Cerrar menú" : "Abrir menú";
+    const viewModeAriaLabel = viewMode ? "Habilitar modo editar tarea" : "Habilitar modo solo lectura"
+    const isMenuClosed = showOptions ? "Cerrar menú de opciones" : "Abrir menú de opciones";
     const isDeployed = showOptions ? " options--deployed" : "";
 
 
@@ -22,13 +23,13 @@ export const Options = ({ viewMode, setViewMode }) => {
             {
                 showOptions && 
                 <ul className="task-editing__menu">
-                    <li title={ viewModeTitle }>
-                        <button className="task-editing__button" onClick={ setViewMode }>
+                    <li>
+                        <button className="task-editing__button" onClick={ setViewMode } title={ viewModeTitle } aria-label={ viewModeAriaLabel }>
                             <FontAwesomeIcon icon={ viewMode ? faPen : faEye } />
                         </button>
                     </li>
-                    <li title="Poner recordatorio">
-                        <button className="task-editing__button">
+                    <li>
+                        <button className="task-editing__button" title="Poner recordatorio">
                             <FontAwesomeIcon icon={ faClock } />
                         </button>
                     </li>

@@ -8,8 +8,11 @@ import { Options } from "./Options/Options.jsx"
 
 export const EditTask = ({ closeEditTask, initTitle, initText, initMode, taskId = undefined }) => {
     const [ viewMode, setViewMode ] = useState(initMode);
+    const editSection = useRef();
     const userTitleContent = useRef();
     const userTextContent = useRef();
+
+    const viewModeAccessibility = viewMode ? "solo lectura." : "Edición."
 
 
     const saveChanges = (key) => {
@@ -45,32 +48,38 @@ export const EditTask = ({ closeEditTask, initTitle, initText, initMode, taskId 
         closeEditTask();
     }
 
-    // const handleResize = (event) => {
-    //     event.target.style.height = "auto";
-    //     event.target.style.height =  event.target.scrollHeight + "px";
-    // }
+
+    editSection.current?.focus();
 
 
     return (
-        <section className="task-editing">
+        <section className="task-editing" 
+                tabIndex={ -1 } 
+                aria-label={`Tarea abierta. Modo ${ viewModeAccessibility }`} 
+                ref={ editSection }
+        >
             <button className="task-editing__return" onClick={ handleClick }>
                 <FontAwesomeIcon icon={ faAngleLeft } /> Volver
             </button>
             
             <textarea 
                 className="task-editing__title"
-                disabled={ viewMode }
+                readOnly={ viewMode }
                 defaultValue={ initTitle } 
                 ref={ userTitleContent } 
                 maxLength={ 100 } 
+                tabIndex={ 0 }
+                aria-label="Titulo"
                 placeholder="TITULO"
             ></textarea>
             <textarea 
                 className="task-editing__text" 
-                disabled={ viewMode }
+                readOnly={ viewMode }
                 defaultValue={ initText } 
                 ref={ userTextContent } 
                 maxLength={ 100000 } 
+                tabIndex={ 0 }
+                aria-label="Descripción de la tarea"
                 placeholder="Escribe aquí..."
             ></textarea>
 

@@ -3,7 +3,7 @@ import { memo, useState } from "react"
 import { RemoveTask } from "./RemoveTask/RemoveTask.jsx"
 import { CompleteTask } from "./CompleteTask/CompleteTask.jsx"
 
-export const Task =  memo( ({ taskTitle, taskText, openTask, showRemovalModal, initCompletionState = false, id, taskToRemove }) => {
+export const Task =  memo( ({ taskTitle, taskText, openTask, showRemovalModal, initCompletionState = false, id, taskToRemove, disableTabIndex }) => {
     const [ completed, setCompleted ] = useState(initCompletionState);
     const isTaskCompleted = completed ? " task--completed" : "";
     const isTitleEmpty = taskTitle === "";
@@ -20,8 +20,14 @@ export const Task =  memo( ({ taskTitle, taskText, openTask, showRemovalModal, i
 
     const handleRemovalConfirmation = (event) => {
         taskToRemove.current = id;
+
         event.stopPropagation();
         showRemovalModal();
+    }
+
+    const handleKeyPress = (event) => {
+        event.stopPropagation();
+        if (event.key === "Enter") openTask();
     }
 
 
@@ -39,12 +45,17 @@ export const Task =  memo( ({ taskTitle, taskText, openTask, showRemovalModal, i
         <div className={ `task${ isTaskCompleted }` }
             title={ completed ? "Tarea completada" : undefined }
             onClick={ openTask }
+            onKeyDown={ handleKeyPress }
+            tabIndex={ disableTabIndex ? -1 : 0 }
         >
-            <RemoveTask confirmRemoval={ handleRemovalConfirmation } />
-            <h2 className="task__title" title={ isTitleEmpty ? taskText : taskTitle } >
+            <h2 className="task__title" 
+                title={ isTitleEmpty ? taskText : taskTitle } 
+                aria-label={ `Titulo de la tarea. ${ isTitleEmpty ? taskText : taskTitle }.` }
+            >
                 { isTitleEmpty ? taskText : taskTitle }
             </h2>
-            <CompleteTask taskState={ completed } setTaskState={ handleTaskCompletion }/>
+            <RemoveTask confirmRemoval={ handleRemovalConfirmation } disableTabIndex={ disableTabIndex } />
+            <CompleteTask taskState={ completed } setTaskState={ handleTaskCompletion } disableTabIndex={ disableTabIndex } />
         </div>
     )
-})
+})      
