@@ -17,6 +17,7 @@ function App() {
     const isNewTitle = isTaskSelected ? notesContent[currentTask.current]?.title : "";
     const isNewText = isTaskSelected ? notesContent[currentTask.current]?.text : "";
     const isNewKey = isTaskSelected ? notesContent[currentTask.current]?.key : undefined;
+    const isPopUpFocused = editing || showRemovalModal;
 
     const completedTasks = JSON.parse(localStorage.getItem("completedTasks"));
 
@@ -62,7 +63,7 @@ function App() {
             }
 
             <main className="main-container" tabIndex={ -1 }>
-                <AddTask openEditor={ () => setEditing(true) } disableTabIndex={ editing }/>
+                <AddTask openEditor={ () => setEditing(true) } disableTabIndex={ isPopUpFocused }/>
                 { 
                     editing && 
                     <EditTask 
@@ -83,7 +84,7 @@ function App() {
                                         openTask={ () => selectNote(index) }
                                         showRemovalModal={ () => setShowRemovalModal(true) } 
                                         initCompletionState={ completedTasks && completedTasks[contentObject.key] }
-                                        disableTabIndex={ editing }
+                                        disableTabIndex={ isPopUpFocused }
                                         id={ contentObject.key }
                                         taskToRemove={ taskToRemove }
                                         key={ contentObject.key }
