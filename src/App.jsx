@@ -48,7 +48,7 @@ function App() {
 
     if (!completedTasks) localStorage.setItem("completedTasks", JSON.stringify({}));
 
-    useEffect(() => preload, [editing, showRemovalModal]);
+    useEffect(preload, [editing, showRemovalModal]);
 
 
     return (
