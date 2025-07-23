@@ -22,18 +22,18 @@ export const Options = ({ viewMode, setViewMode }) => {
             </button>
             {
                 showOptions && 
-                <ul className="task-editing__menu">
-                    <li>
-                        <button className="task-editing__button" onClick={ setViewMode } title={ viewModeTitle } aria-label={ viewModeAriaLabel }>
-                            <FontAwesomeIcon icon={ viewMode ? faPen : faEye } />
-                        </button>
-                    </li>
-                    <li>
+                // <ul className="task-editing__menu">
+                    /* <li> */
+                <button className="task-editing__button" onClick={ setViewMode } title={ viewModeTitle } aria-label={ viewModeAriaLabel }>
+                    <FontAwesomeIcon icon={ viewMode ? faPen : faEye } />
+                </button>
+                    /* </li> */
+                    /* <li>
                         <button className="task-editing__button" title="Poner recordatorio">
                             <FontAwesomeIcon icon={ faClock } />
                         </button>
-                    </li>
-                </ul>
+                    </li> */
+                /* </ul> */
             }
         </div>
     )

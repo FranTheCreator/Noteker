@@ -5,12 +5,14 @@
     position: absolute;
     bottom: 15px;
     right: 15px;
-    width: fit-content;
-    height: fit-content;
-    background-color: var(--second-contrast-color);
+    width: 40px;
+    height: 40px;
     border-radius: 25px;
-    cursor: pointer;
+    color: var(--main-color);
+    background-color: var(--second-contrast-color);
+    font-size: 1em;
     transition: opacity .2s, scale .2s;
+    cursor: pointer;
     z-index: 900;
 }
 
@@ -19,34 +21,7 @@
     scale: 1.08;
 }
 
-.add-task:hover > .add-task-dot{
-    opacity: 1;
-    scale: 1.08;
-}
-
 .add-task:active{
     opacity: 1;
     scale: .92;
 }
-
-.add-task:active > .add-task-dot{
-    scale: .92;
-}
-
-.add-task-dot{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    color: var(--main-color);
-    /* background-color: var(--second-contrast-color); */
-    /* opacity: .6; */
-    border-radius: 50%;
-    transition: opacity .2s, scale .2s;
-}
-
-.add-task-plus-sign{
-    color: var(--main-color);
-}   

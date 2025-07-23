@@ -49,11 +49,18 @@
     color: var(--font-color);
     background-color: transparent;
     font-size: 2em;
-    overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--second-contrast-color) transparent;
     scrollbar-gutter: stable;
     resize: none;
+}
+
+.title--readonly:hover{
+    cursor: default;
+}
+
+.title--readonly:active{
+    cursor: not-allowed;
 }
 
 .task-editing__title::placeholder{
@@ -77,6 +84,14 @@
     scrollbar-color: var(--second-contrast-color) transparent;
     scrollbar-gutter: stable;
     resize: none;
+}
+
+.text--readonly:hover{
+    cursor: defaultd;
+}
+
+.text--readonly:active{
+    cursor: not-allowed;
 }
 
 .task-editing__text::placeholder{

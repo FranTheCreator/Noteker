@@ -12,6 +12,8 @@ export const EditTask = ({ closeEditTask, initTitle, initText, initMode, taskId 
     const userTitleContent = useRef();
     const userTextContent = useRef();
 
+    const viewModeIndicatorTitle = viewMode ? " title--readonly" : "";
+    const viewModeIndicatorText = viewMode ? " text--readonly" : "";
     const viewModeAccessibility = viewMode ? "solo lectura." : "Edición."
 
 
@@ -63,7 +65,7 @@ export const EditTask = ({ closeEditTask, initTitle, initText, initMode, taskId 
             </button>
             
             <textarea 
-                className="task-editing__title"
+                className={`task-editing__title${ viewModeIndicatorTitle }`}
                 readOnly={ viewMode }
                 defaultValue={ initTitle } 
                 ref={ userTitleContent } 
@@ -73,7 +75,7 @@ export const EditTask = ({ closeEditTask, initTitle, initText, initMode, taskId 
                 placeholder="TITULO"
             ></textarea>
             <textarea 
-                className="task-editing__text" 
+                className={`task-editing__text${ viewModeIndicatorText }`}
                 readOnly={ viewMode }
                 defaultValue={ initText } 
                 ref={ userTextContent } 
